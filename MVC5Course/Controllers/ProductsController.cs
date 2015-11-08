@@ -16,20 +16,33 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities db = new FabricsEntities();
 
+        public ActionResult BatchUpdate()
+        {
+            var data = db.Product.Where(p => p.ProductId < 10);
+
+            foreach (var item in data)
+            {
+                item.Price = 5;
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+
+            return RedirectToAction("Index");
+        }
         // GET: Products
         public ActionResult Index()
         {
             var data = db.Product.AsQueryable();
 
-            data = data.Where(p => p.ProductName.Contains("100"));
-
-            //if(true)
-            //{
-            //    data = data.Where(p => p.Active == true);
-            //}
-
-            data = data.OrderBy(p => p.ProductName);
-
+            data = data.
+                    Where(p => p.ProductId < 10);
 
             var data1 = from p in db.Product
                         where p.ProductName.Contains("100")
