@@ -14,6 +14,6 @@ namespace MVC5Course.Models
 
         [Required]
         [Range(1, 9999)]
-        public decimal Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
     }
 }
