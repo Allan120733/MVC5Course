@@ -18,6 +18,8 @@ namespace MVC5Course.Controllers
 
         public ActionResult BatchUpdate()
         {
+            //db.Database.ExecuteSqlCommand("UPDATE dbo.Product SET Price=5 WHERE ProductId < @p0", 10);
+
             var data = db.Product.Where(p => p.ProductId < 10);
 
             foreach (var item in data)
