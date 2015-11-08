@@ -39,12 +39,17 @@ namespace MVC5Course.Controllers
             return RedirectToAction("Index");
         }
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             var data = db.Product.AsQueryable();
 
             data = data.
                     Where(p => p.ProductId < 10);
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                data = data.Where(p => p.ProductName.Contains(search));
+            }
 
             var data1 = from p in db.Product
                         where p.ProductName.Contains("100")
