@@ -159,9 +159,6 @@ namespace MVC5Course.Controllers
                 //prod.ProductName = product.ProductName;
                 //prod.Price = product.Price;
 
-                prod.Stock = 1;
-                prod.Active = true;
-
                 db.Product.Add(prod);
 
                 try

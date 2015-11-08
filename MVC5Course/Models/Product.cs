@@ -18,6 +18,9 @@ namespace MVC5Course.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.Stock = 1;
+            this.Active = true;
+
             this.OrderLine = new HashSet<OrderLine>();
         }
     
