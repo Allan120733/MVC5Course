@@ -24,10 +24,10 @@ namespace MVC5Course.Models
         public int ProductId { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(100)]
         public string ProductName { get; set; }
         [Required]
-        [Range(1.0, 99.9)]
+        [Range(1.0, 9999.9)]
         [DisplayFormat(DataFormatString="{0:C}")]
         public Nullable<decimal> Price { get; set; }
         [Required]
