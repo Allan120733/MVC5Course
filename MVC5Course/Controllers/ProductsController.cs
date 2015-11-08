@@ -45,8 +45,6 @@ namespace MVC5Course.Controllers
                             Price = p.Price
                         };
             
-
-
             return View(data);
         }
 
@@ -160,17 +158,19 @@ namespace MVC5Course.Controllers
         {
             var db = new FabricsEntities();
 
-            db.Product.Add(new Product()
+            var product = new Product()
             {
-                ProductName = "Entity Framework",
+                ProductName = "Entity",
                 Price = 99,
                 Stock = 10,
                 Active = true
-            });
+            };
+
+            db.Product.Add(product);
 
             db.SaveChanges();
 
-            return "OK";
+            return "OK: " + product.ProductId;
         }
 
         public ActionResult NewProduct()
