@@ -10,7 +10,8 @@ namespace MVC5Course.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            //return new ViewResult() { ViewName = "About" };
+            return View("AA");
         }
 
         public ActionResult About()
