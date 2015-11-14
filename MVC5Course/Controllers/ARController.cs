@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    public class ARController : Controller
+    public class ARController : BaseController
     {
         public ActionResult Index()
         {
@@ -50,5 +50,19 @@ namespace MVC5Course.Controllers
             return File(fileName, contentType, Path.GetFileName(fileName));
         }
 
+        public ActionResult JsonIndex()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult JsonData()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+
+            var data = db.Product.Take(5).ToList();
+
+            return Json(data);
+        }
     }
 }
