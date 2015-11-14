@@ -16,11 +16,13 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities db = new FabricsEntities();
 
+        ProductRepository repo = RepositoryHelper.GetProductRepository();
+
         public ActionResult BatchUpdate()
         {
             //db.Database.ExecuteSqlCommand("UPDATE dbo.Product SET Price=5 WHERE ProductId < @p0", 10);
 
-            var data = db.Product.Where(p => p.ProductId < 10);
+            var data = repo.Get取得前面10筆範例資料();
 
             foreach (var item in data)
             {
@@ -41,29 +43,28 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index(string search)
         {
-            var data = db.Product.AsQueryable();
-
-            data = data.
-                    Where(p => p.ProductId < 10);
+            // var data = db.Product.Where(p => p.ProductId < 10).AsQueryable();
+            // var data = repo.All().Where(p => p.ProductId < 10);
+            var data = repo.Get取得前面10筆範例資料();
 
             if (!String.IsNullOrEmpty(search))
             {
                 data = data.Where(p => p.ProductName.Contains(search));
             }
 
-            var data1 = from p in db.Product
-                        where p.ProductName.Contains("100")
-                        orderby p.ProductName
-                        select p;
+            //var data1 = from p in db.Product
+            //            where p.ProductName.Contains("100")
+            //            orderby p.ProductName
+            //            select p;
             
-            var data2 = from p in db.Product
-                        where p.ProductName.Contains("100")
-                        orderby p.ProductName
-                        select new NewProductVM
-                        {
-                            ProductName = p.ProductName,
-                            Price = p.Price
-                        };
+            //var data2 = from p in db.Product
+            //            where p.ProductName.Contains("100")
+            //            orderby p.ProductName
+            //            select new NewProductVM
+            //            {
+            //                ProductName = p.ProductName,
+            //                Price = p.Price
+            //            };
             
             return View(data);
         }
@@ -75,9 +76,12 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            //Product product = db.Product.Find(id);
             //Product product = db.Product.Where(p => p.ProductId == id && p.Active == true).FirstOrDefault();
             //Product product = db.Product.FirstOrDefault(p => p.ProductId == id && p.Active == true);
+
+            var product = repo.GetByID(id);
+
             if (product == null)
             {
                 return HttpNotFound();
@@ -115,7 +119,7 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            Product product = repo.GetByID(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -146,7 +150,7 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            Product product = repo.GetByID(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -159,7 +163,7 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Product.Find(id);
+            Product product = repo.GetByID(id);
 
             //var orderLines = db.OrderLine.Where(p => p.ProductId == product.ProductId);
             //var orderLines = product.OrderLine.ToList();
