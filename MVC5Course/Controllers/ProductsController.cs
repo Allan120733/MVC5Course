@@ -14,7 +14,7 @@ namespace MVC5Course.Controllers
 {
     public class ProductsController : Controller
     {
-        private FabricsEntities db = new FabricsEntities();
+        //private FabricsEntities db = new FabricsEntities();
 
         ProductRepository repo = RepositoryHelper.GetProductRepository();
 
@@ -31,7 +31,8 @@ namespace MVC5Course.Controllers
 
             try
             {
-                db.SaveChanges();
+                //repo.UnitOfWork.Commit();
+                repo.UnitOfWork.Commit();
             }
             catch (DbEntityValidationException ex)
             {
@@ -104,8 +105,8 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Product.Add(product);
-                db.SaveChanges();
+                repo.Add(product);
+                repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
 
@@ -136,8 +137,10 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(product).State = EntityState.Modified;
+                ((FabricsEntities)repo.UnitOfWork.Context).Entry(product).State = EntityState.Modified;
+
+                repo.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -172,10 +175,13 @@ namespace MVC5Course.Controllers
             //    db.OrderLine.Remove(item);
             //}
 
-            db.OrderLine.RemoveRange(product.OrderLine);
-            db.Product.Remove(product);
+            //db.OrderLine.RemoveRange(product.OrderLine);
 
-            db.SaveChanges();
+
+            //db.Product.Remove(product);
+            repo.Delete(product);
+
+            repo.UnitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
@@ -184,7 +190,7 @@ namespace MVC5Course.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                repo.UnitOfWork.Context.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -203,7 +209,7 @@ namespace MVC5Course.Controllers
 
             db.Product.Add(product);
 
-            db.SaveChanges();
+            repo.UnitOfWork.Commit();
 
             return "OK: " + product.ProductId;
         }
@@ -224,11 +230,11 @@ namespace MVC5Course.Controllers
                 //prod.ProductName = product.ProductName;
                 //prod.Price = product.Price;
 
-                db.Product.Add(prod);
+                repo.Add(prod);
 
                 try
                 {
-                    db.SaveChanges();
+                    repo.UnitOfWork.Commit();
                 }
                 catch (DbEntityValidationException ex)
                 {

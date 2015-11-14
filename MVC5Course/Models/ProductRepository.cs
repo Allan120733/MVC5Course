@@ -11,7 +11,7 @@ namespace MVC5Course.Models
             return base.All().Where(p => p.Active == true);
         }
 
-        public override IQueryable<Product> All(bool isGetAll)
+        public IQueryable<Product> All(bool isGetAll)
         {
             if (isGetAll)
             {
@@ -25,7 +25,12 @@ namespace MVC5Course.Models
 
         public IQueryable<Product> Get取得前面10筆範例資料()
         {
-            return this.All().Where(p => p.ProductId < 10);
+            return this.Get取得前面n筆範例資料(10);
+        }
+
+        public IQueryable<Product> Get取得前面n筆範例資料(int n)
+        {
+            return this.All().Where(p => p.ProductId < n);
         }
 
         public Product GetByID(int? id)
