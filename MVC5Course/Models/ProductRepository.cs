@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace MVC5Course.Models
 {
-	public  class ProductRepository : EFRepository<Product>, IProductRepository
-	{
+    public class ProductRepository : EFRepository<Product>, IProductRepository
+    {
         public override IQueryable<Product> All()
         {
             return base.All().Where(p => p.Active == true);
@@ -37,10 +37,19 @@ namespace MVC5Course.Models
         {
             return this.All().FirstOrDefault(p => p.ProductId == id.Value);
         }
+
+        public override void Delete(Product product)
+        {
+            var db = ((FabricsEntities)this.UnitOfWork.Context);
+
+            db.OrderLine.RemoveRange(product.OrderLine);
+
+            base.Delete(product);
+        }
     }
 
-	public  interface IProductRepository : IRepository<Product>
-	{
+    public interface IProductRepository : IRepository<Product>
+    {
 
-	}
+    }
 }

@@ -168,17 +168,6 @@ namespace MVC5Course.Controllers
         {
             Product product = repo.GetByID(id);
 
-            //var orderLines = db.OrderLine.Where(p => p.ProductId == product.ProductId);
-            //var orderLines = product.OrderLine.ToList();
-            //foreach (var item in orderLines)
-            //{
-            //    db.OrderLine.Remove(item);
-            //}
-
-            //db.OrderLine.RemoveRange(product.OrderLine);
-
-
-            //db.Product.Remove(product);
             repo.Delete(product);
 
             repo.UnitOfWork.Commit();
