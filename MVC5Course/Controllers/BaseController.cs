@@ -7,9 +7,25 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected FabricsEntities db = new FabricsEntities();
 
+        public ActionResult Debug()
+        {
+            return View();
+        }
+
+        protected override void HandleUnknownAction(string actionName)
+        {
+            if (Request.IsLocal)
+            {
+                this.Redirect("/?unknown-action="+actionName).ExecuteResult(this.ControllerContext);
+            }
+            else
+            {
+                base.HandleUnknownAction(actionName);
+            }
+        }
     }
 }
