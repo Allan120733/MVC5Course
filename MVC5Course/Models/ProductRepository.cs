@@ -1,9 +1,9 @@
-using System;
+ï»¿using System;
 using System.Linq;
 using System.Collections.Generic;
-	
+
 namespace MVC5Course.Models
-{   
+{
 	public  class ProductRepository : EFRepository<Product>, IProductRepository
 	{
         public override IQueryable<Product> All()
@@ -23,12 +23,12 @@ namespace MVC5Course.Models
             }
         }
 
-        public IQueryable<Product> Get¨ú±o«e­±10µ§½d¨Ò¸ê®Æ()
+        public IQueryable<Product> Getå–å¾—å‰é¢10ç­†ç¯„ä¾‹è³‡æ–™()
         {
-            return this.Get¨ú±o«e­±nµ§½d¨Ò¸ê®Æ(10);
+            return this.Getå–å¾—å‰é¢nç­†ç¯„ä¾‹è³‡æ–™(10);
         }
 
-        public IQueryable<Product> Get¨ú±o«e­±nµ§½d¨Ò¸ê®Æ(int n)
+        public IQueryable<Product> Getå–å¾—å‰é¢nç­†ç¯„ä¾‹è³‡æ–™(int n)
         {
             return this.All().Where(p => p.ProductId < n);
         }
