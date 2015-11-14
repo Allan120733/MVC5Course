@@ -64,5 +64,11 @@ namespace MVC5Course.Controllers
 
             return Json(data);
         }
+
+        public ActionResult RedirectToIndex()
+        {
+            return RedirectToActionPermanent("Index");
+        }
+
     }
 }
