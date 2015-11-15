@@ -37,5 +37,14 @@ namespace MVC5Course.Controllers
 
             return View();
         }
+
+        public ActionResult ViewTest(bool enable = true)
+        {
+            ViewBag.IsEnabled = enable;
+
+            int[] data = new int[] { 1, 2, 3, 4, 5 };
+
+            return View(data);
+        }
     }
 }

@@ -30,11 +30,21 @@ namespace MVC5Course.Controllers
 
             try
             {
-                //repo.UnitOfWork.Commit();
                 repo.UnitOfWork.Commit();
             }
             catch (DbEntityValidationException ex)
             {
+                //var allErrors = new List<string>();
+
+                //foreach (DbEntityValidationResult re in ex.EntityValidationErrors)
+                //{
+                //    foreach (DbValidationError err in re.ValidationErrors)
+                //    {
+                //        allErrors.Add(err.ErrorMessage);
+                //    }
+                //}
+
+                //ViewBag.Errors = allErrors;
                 throw ex;
             }
 
@@ -71,7 +81,10 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
-        [HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
+        [HandleError(
+            ExceptionType = typeof(DbEntityValidationException), 
+            View = "Error_DbEntityValidationException")
+        ]
         [HttpPost]
         public ActionResult Index(int[] ProductId, FormCollection form)
         {
