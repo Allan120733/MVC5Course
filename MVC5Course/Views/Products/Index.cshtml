@@ -18,8 +18,14 @@
 
 <br />
 
+@using (Html.BeginForm())
+{
+ 
 <table class="table">
     <tr>
+        <th class="text-center">
+            批次<br />刪除
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
@@ -37,6 +43,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td class="text-center">
+            <input type="checkbox" name="ProductId" value="@item.ProductId" />
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
@@ -57,6 +66,9 @@
     </tr>
 }
     <tr>
+        <td class="text-center">
+            <button type="submit">刪除</button>
+        </td>
         <td></td>
         <td>
             <a href="@Url.Action("BatchUpdate")" class="btn btn-default">
@@ -69,3 +81,6 @@
     </tr>
 
 </table>
+
+
+}

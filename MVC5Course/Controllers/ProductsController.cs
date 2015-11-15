@@ -68,6 +68,19 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public ActionResult Index(int[] ProductId)
+        {
+            foreach (var id in ProductId)
+            {
+                repo.Delete(repo.GetByID(id));
+            }
+
+            repo.UnitOfWork.Commit();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
