@@ -55,7 +55,7 @@ namespace MVC5Course.Controllers
             //            where p.ProductName.Contains("100")
             //            orderby p.ProductName
             //            select p;
-            
+
             //var data2 = from p in db.Product
             //            where p.ProductName.Contains("100")
             //            orderby p.ProductName
@@ -64,21 +64,36 @@ namespace MVC5Course.Controllers
             //                ProductName = p.ProductName,
             //                Price = p.Price
             //            };
-            
+
             return View(data);
         }
 
         [HttpPost]
-        public ActionResult Index(int[] ProductId)
+        public ActionResult Index(int[] ProductId, IList<Product> data)
         {
-            foreach (var id in ProductId)
+            if (ModelState.IsValid)
             {
-                repo.Delete(repo.GetByID(id));
+                foreach (var item in data)
+                {
+                    var dbItem = repo.GetByID(item.ProductId);
+
+                    dbItem.InjectFrom(item);
+                }
+
+                if (ProductId != null)
+                {
+                    foreach (var id in ProductId)
+                    {
+                        repo.Delete(repo.GetByID(id));
+                    }
+                }
+
+                repo.UnitOfWork.Commit();
+
+                return RedirectToAction("Index");
             }
 
-            repo.UnitOfWork.Commit();
-
-            return RedirectToAction("Index");
+            return View();
         }
 
         // GET: Products/Details/5
@@ -225,7 +240,7 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                var prod = Mapper.Map<Product>(product); 
+                var prod = Mapper.Map<Product>(product);
 
                 //var prod = new Product();
                 //prod.ProductName = product.ProductName;
@@ -249,7 +264,7 @@ namespace MVC5Course.Controllers
                         }
                     }
 
-                    return Content(String.Join("<br>",allErrors.ToArray()));
+                    return Content(String.Join("<br>", allErrors.ToArray()));
                     //throw ex;
                 }
 
