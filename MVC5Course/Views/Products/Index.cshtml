@@ -54,18 +54,15 @@
         <td>
             @Html.HiddenFor(modelItem => data[i].ProductId)
             @Html.EditorFor(modelItem => data[i].ProductName)
-            @Html.ValidationMessageFor(modelItem => data[i].ProductName, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => data[i].Price)
-            @Html.ValidationMessageFor(modelItem => data[i].Price, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => data[i].Active)
         </td>
         <td>
             @Html.EditorFor(modelItem => data[i].Stock)
-            @Html.ValidationMessageFor(modelItem => data[i].Stock, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=data[i].ProductId }) |

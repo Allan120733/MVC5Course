@@ -71,32 +71,32 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
+        [HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
         [HttpPost]
         public ActionResult Index(int[] ProductId, FormCollection form)
         {
             IList<NewProductVM> data = new List<NewProductVM>();
 
-            if (TryUpdateModel<IList<NewProductVM>>(data, "data"))
+            TryUpdateModel<IList<NewProductVM>>(data, "data");
+
+            foreach (var item in data)
             {
-                foreach (var item in data)
-                {
-                    var dbItem = repo.GetByID(item.ProductId);
+                var dbItem = repo.GetByID(item.ProductId);
 
-                    dbItem.InjectFrom(item);
-                }
-
-                if (ProductId != null)
-                {
-                    foreach (var id in ProductId)
-                    {
-                        repo.Delete(repo.GetByID(id));
-                    }
-                }
-
-                repo.UnitOfWork.Commit();
-
-                return RedirectToAction("Index");
+                dbItem.InjectFrom(item);
             }
+
+            if (ProductId != null)
+            {
+                foreach (var id in ProductId)
+                {
+                    repo.Delete(repo.GetByID(id));
+                }
+            }
+
+            repo.UnitOfWork.Commit();
+
+            return RedirectToAction("Index");
 
             //ModelState.AddModelError("data[0].Price", "ERROR");
             //ModelState.Clear();
@@ -152,6 +152,8 @@ namespace MVC5Course.Controllers
         {
             if (id == null)
             {
+                throw new ArgumentException("Not id input");
+
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = repo.GetByID(id);

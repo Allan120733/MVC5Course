@@ -33,6 +33,8 @@ namespace MVC5Course.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Test Action");
 
+            throw new Exception("BAD");
+
             return View();
         }
     }
