@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MVC5Course.Models
 {
@@ -11,7 +12,7 @@ namespace MVC5Course.Models
         public int ProductId { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(80)]
         public string ProductName { get; set; }
 
         [Required]

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MVC5Course.Models;
 using System.Data.Entity.Validation;
 using Omu.ValueInjecter;
+using System.Web.UI;
 
 namespace MVC5Course.Controllers
 {
@@ -39,6 +40,8 @@ namespace MVC5Course.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //[OutputCache(Location=OutputCacheLocation.Server, Duration=60)]
         // GET: Products
         public ActionResult Index(string search)
         {
@@ -95,7 +98,10 @@ namespace MVC5Course.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            //ModelState.AddModelError("data[0].Price", "ERROR");
+            //ModelState.Clear();
+
+            return View(repo.Get取得前面10筆範例資料());
         }
 
         // GET: Products/Details/5
@@ -162,6 +168,7 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //[ValidateInput(false)]
         public ActionResult Edit(int? id, FormCollection form)
         // [Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product
         {

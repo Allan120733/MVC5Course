@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC5Course.ActionFilters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,7 @@ namespace MVC5Course.Controllers
     {
         public ActionResult Index()
         {
-            //return new ViewResult() { ViewName = "About" };
-            return View("AA");
+            return View();
         }
 
         public ActionResult About()
@@ -28,8 +28,11 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        [在多個控制器中共用的ViewBag屬性]
         public ActionResult Test()
         {
+            System.Diagnostics.Debug.WriteLine("Test Action");
+
             return View();
         }
     }
