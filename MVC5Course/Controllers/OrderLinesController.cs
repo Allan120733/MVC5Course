@@ -15,9 +15,21 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: OrderLines
-        public ActionResult Index(int productId)
+        public ActionResult Index(int productId, string OrderStatus)
         {
             var orderLine = db.OrderLine.Where(p => p.ProductId == productId);
+
+            var list = from p in orderLine
+                       group p by p.Order.OrderStatus into g
+                       select g.Key;
+
+            ViewBag.OrderStatus = new SelectList(list);
+
+            if (!String.IsNullOrEmpty(OrderStatus))
+            {
+                orderLine = orderLine.Where(p => p.Order.OrderStatus == OrderStatus);
+            }
+
             return PartialView(orderLine.ToList());
         }
 

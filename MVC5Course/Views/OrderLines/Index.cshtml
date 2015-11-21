@@ -2,6 +2,11 @@
 
 <h2>OrderLines</h2>
 
+@using (Html.BeginForm())
+{
+    @:OrderStatus: @Html.DropDownList("OrderStatus", null, "請選擇訂單狀態", new { onchange="this.form.submit();" })
+}
+
 <table class="table">
     <tr>
         <th>
