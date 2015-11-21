@@ -18,6 +18,8 @@ namespace MVC5Course.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            ViewBag.IsEnabled = true;
+
             return View();
         }
 
@@ -45,6 +47,11 @@ namespace MVC5Course.Controllers
             int[] data = new int[] { 1, 2, 3, 4, 5 };
 
             return View(data);
+        }
+
+        public ActionResult ViewHelper()
+        {
+            return View();
         }
     }
 }
