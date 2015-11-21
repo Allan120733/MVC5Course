@@ -20,6 +20,8 @@ namespace MVC5Course.Models
         //[限制欄位值必須出現兩個數字1]
         public string ProductName { get; set; }
         public Nullable<decimal> Price { get; set; }
+
+        [UIHint("Boolean.是否啟用")]
         public Nullable<bool> Active { get; set; }
 
         [DisplayName("庫存量")]

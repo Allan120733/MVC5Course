@@ -213,7 +213,7 @@ namespace MVC5Course.Controllers
         // [Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product
         {
             var product = repo.GetByID(id);
-            var includeProperties = "ProductId,ProductName,Price,Stock".Split(',');
+            var includeProperties = "ProductId,ProductName,Price,Active,Stock".Split(',');
             if (TryUpdateModel<Product>(product, includeProperties))
             {
                 repo.UnitOfWork.Commit();
