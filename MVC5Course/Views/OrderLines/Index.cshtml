@@ -4,7 +4,9 @@
 
 @using (Html.BeginForm())
 {
-    @:OrderStatus: @Html.DropDownList("OrderStatus", null, "請選擇訂單狀態", new { onchange="this.form.submit();" })
+    <div>
+        OrderStatus: @Html.DropDownList("OrderStatus", null, "請選擇訂單狀態", new { onchange="this.form.submit();" })
+    </div>
 }
 
 <table class="table">
