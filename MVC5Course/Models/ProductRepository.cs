@@ -25,12 +25,24 @@ namespace MVC5Course.Models
 
         public IQueryable<Product> Get取得前面10筆範例資料()
         {
-            return this.Get取得前面n筆範例資料(10);
+            return this.Get取得前面n筆範例資料(10, null);
         }
 
-        public IQueryable<Product> Get取得前面n筆範例資料(int n)
+        public IQueryable<Product> Get取得前面10筆範例資料(bool? active)
         {
-            return this.All().OrderBy(p => p.ProductId).Take(n);
+            return this.Get取得前面n筆範例資料(10, active);
+        }
+
+        public IQueryable<Product> Get取得前面n筆範例資料(int n, bool? active)
+        {
+            var data = base.All();
+
+            if (active.HasValue)
+            {
+                data = data.Where(p => p.Active.HasValue && p.Active.Value == active);
+            }
+
+            return data.OrderBy(p => p.ProductId).Take(n);
         }
 
         public Product GetByID(int? id)

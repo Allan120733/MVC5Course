@@ -53,16 +53,35 @@ namespace MVC5Course.Controllers
 
         //[OutputCache(Location=OutputCacheLocation.Server, Duration=60)]
         // GET: Products
-        public ActionResult Index(string search)
+        public ActionResult Index(string search, string ProductName, bool? active = true)
         {
+            ViewBag.IsActive = active;
+
+
+            var pList = from p in repo.All(true)
+                        group p by p.ProductName into g
+                        select g.Key;
+
+            ViewBag.ProductName = new SelectList(pList);
+
+            //var pList = repo.All();
+            //ViewBag.ProductName = new SelectList(pList, "ProductId", "ProductName");
+
+
             // var data = db.Product.Where(p => p.ProductId < 10).AsQueryable();
             // var data = repo.All().Where(p => p.ProductId < 10);
-            var data = repo.Get取得前面10筆範例資料();
+            //var data = repo.All(true); 
+            var data = repo.Get取得前面10筆範例資料(active);
 
             if (!String.IsNullOrEmpty(search))
             {
                 data = data.Where(p => p.ProductName.Contains(search));
             }
+
+            //if (!String.IsNullOrEmpty(ProductName))
+            //{
+            //    data = data.Where(p => p.ProductName == ProductName);
+            //}
 
             //var data1 = from p in db.Product
             //            where p.ProductName.Contains("100")
