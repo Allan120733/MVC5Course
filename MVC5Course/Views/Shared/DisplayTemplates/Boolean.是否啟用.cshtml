@@ -1,0 +1,13 @@
+﻿@model bool?
+
+@if (Model.HasValue)
+{
+    if (Model.Value)
+    {
+        @:啟用
+    }
+    else
+    {
+        @:停用
+    }
+}

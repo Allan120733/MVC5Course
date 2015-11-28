@@ -18,6 +18,8 @@ namespace MVC5Course.Models
         
         [StringLength(80, ErrorMessage="欄位長度不得大於 80 個字元")]
         //[限制欄位值必須出現兩個數字1]
+        //[DataType(DataType.ImageUrl)]
+        //[UIHint("ImageUrl.350x350")]
         public string ProductName { get; set; }
         public Nullable<decimal> Price { get; set; }
 
