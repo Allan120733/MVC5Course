@@ -87,19 +87,20 @@ namespace <#= Namespace #>
         includeExpressions = String.Join("", relatedProperties.Values.Select(property => String.Format(".Include({0} => {0}.{1})", lambdaVar, property.AssociationPropertyName)));
 #>
 <# if(!String.IsNullOrEmpty(includeExpressions)) { #>
-            var <#= entitySetVar #> = db.<#= entitySetName #><#= includeExpressions #>;
+            var <#= entitySetVar #> = db.<#= entitySetName #><#= includeExpressions #>.OrderBy(p => p.<#=primaryKeyName#>);
 <#		if (UseAsync) { #>
             return View(await <#= entitySetVar #>.ToListAsync());
 <#		} else { #>
-            return View(<#= entitySetVar #>.ToList());
+			ViewData.Model = <#= entitySetVar #>.ToPagedList(pageNumber: pageNumber, pageSize: 10);
+            return View();
 <#		} #>
 <# } else { #>
 <#		if (UseAsync) { #>
             return View(await db.<#= entitySetName #><#= includeExpressions #>.ToListAsync());
 <#		} else { #>
 
-			var data = db.<#= entitySetName #>.OrderBy(p => p.<#=primaryKeyName#>);
-			ViewData.Model = data.ToPagedList(pageNumber: pageNumber, pageSize: 10);
+			var <#= entitySetVar #> = db.<#= entitySetName #>.OrderBy(p => p.<#=primaryKeyName#>);
+			ViewData.Model = <#= entitySetVar #>.ToPagedList(pageNumber: pageNumber, pageSize: 10);
             return View();
 
 <#		} #>
