@@ -17,6 +17,8 @@ namespace MVC5Course.Controllers
         // GET: OrderLines
         public ActionResult Index(int productId, string OrderStatus)
         {
+            ViewBag.productId = productId;
+
             var orderLine = db.OrderLine.Where(p => p.ProductId == productId);
 
             var list = from p in orderLine

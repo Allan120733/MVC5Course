@@ -1,11 +1,16 @@
 ﻿@model IEnumerable<MVC5Course.Models.OrderLine>
-
+@{
+    if (IsAjax)
+    {
+        Layout = "";
+    }
+}
 <h2>OrderLines</h2>
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm("Index", "OrderLines", new { productId = ViewBag.productId }, new AjaxOptions() { UpdateTargetId = "details" }))
 {
     <div>
-        OrderStatus: @Html.DropDownList("OrderStatus", null, "請選擇訂單狀態", new { onchange="this.form.submit();" })
+        OrderStatus: @Html.DropDownList("OrderStatus", null, "請選擇訂單狀態", new { onchange = "$(this.form).trigger('submit');" })
     </div>
 }
 
