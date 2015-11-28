@@ -33,7 +33,7 @@ namespace MVC5Course.Controllers
                 orderLine = orderLine.Where(p => p.Order.OrderStatus == OrderStatus);
             }
 
-            return PartialView(orderLine.ToList());
+            return PartialView("Index", orderLine.ToList());
         }
 
         // GET: OrderLines/Details/5
@@ -124,28 +124,7 @@ namespace MVC5Course.Controllers
 
             //
 
-            var productId = ol.ProductId;
-
-            ViewBag.productId = productId;
-
-            var orderLine = db.OrderLine.Where(p => p.ProductId == productId);
-
-            var list = from p in orderLine
-                       group p by p.Order.OrderStatus into g
-                       select g.Key;
-
-            ViewBag.OrderStatus = new SelectList(list);
-            ViewBag.OrderStatusSelected = OrderStatus;
-
-            if (!String.IsNullOrEmpty(OrderStatus))
-            {
-                orderLine = orderLine.Where(p => p.Order.OrderStatus == OrderStatus);
-            }
-
-            return PartialView("Index", orderLine.ToList());
-
-
-
+            return Index(ol.ProductId, OrderStatus);
         }
 
         protected override void Dispose(bool disposing)
