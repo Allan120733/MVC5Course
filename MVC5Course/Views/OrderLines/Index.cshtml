@@ -14,6 +14,8 @@
     </div>
 }
 
+<img id="loading" style="display:none" src="~/Content/ajax-loader.gif" alt="" />
+
 <table class="table">
     <tr>
         <th>
@@ -56,9 +58,18 @@
             }, 
             new AjaxOptions() { 
                 UpdateTargetId="details", 
+                Confirm = "你確定嗎？",
+                LoadingElementId = "loading",
+                OnSuccess = "GetResult",
                 HttpMethod = "POST" })
         </td>
     </tr>
 }
 
 </table>
+
+<script>
+    function GetResult(data) {
+        console.log(data);
+    }
+</script>
